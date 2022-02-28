@@ -4,8 +4,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AuthContext = createContext({});
 
-
-
 const AuthProvider = ({ children }) => {
     const initialState = {
         token: null,

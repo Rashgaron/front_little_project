@@ -25,7 +25,11 @@ function SignUpScreen({ navigation }) {
     }
 
     const createUser = async () => {
-       signUp(user);
+        if(name.length === 0 || email.length === 0 || password.length === 0) {
+
+        }
+        else 
+            signUp(user);
     }
 
     return (

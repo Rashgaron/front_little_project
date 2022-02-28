@@ -5,8 +5,6 @@ import { AuthContext } from '../../../context/authContext';
 
 function SignInScreen({ navigation }) {
 
-    const { setAuth } = useContext(AuthContext);
-
     const { signIn } = useAuth();
 
     const [showPassword, setShowPassword] = useState(true);
@@ -14,6 +12,11 @@ function SignInScreen({ navigation }) {
         email: '',
         password: '',
     })
+    const [error, setError] = useState({
+        error: false, 
+        message: ''
+    });
+    const [isLoading, setLoading] = useState(false);
 
     const { email, password } = user;
 
@@ -27,8 +30,16 @@ function SignInScreen({ navigation }) {
     const SignIn = () => {
         if(email.length === 0 || password.length === 0) {
             //Form Error
+            setError({
+                error: true,
+                message: 'Please fill in all fields'
+            });
         }else {
-            signIn(user);
+            setLoading(true);
+            signIn(user)
+                .then()
+                .catch(err => {setError({error:true, message: 'There is an error with your password or email'});})
+                .finally(()=> setTimeout(()=>{setLoading(false);}, 1000));
         }
     }
 
@@ -49,7 +60,13 @@ function SignInScreen({ navigation }) {
                         Enter your credentials below
                     </Text>
                 </View>
-
+                {error.error ?
+                    <View style={styles.errorContainer}>
+                        <Text style={styles.error}>
+                            {error.message}
+                        </Text>
+                    </View>
+                : null}
                 <TextInput
                     onChangeText={(text) => onChangeText(text, 'email')}
                     value={email}
@@ -82,7 +99,8 @@ function SignInScreen({ navigation }) {
                 </View>
                 <Button
                     onPress={()=> SignIn()}
-                    title="Sign In"
+                    title={isLoading ? 'Loading...' : 'Sign In'}
+                    disabled={isLoading}
                 />
             </View>
             <Text>
@@ -156,6 +174,16 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderRadius: 5,
         paddingLeft: 10,
+    },
+    error: {
+        color: 'red',
+    },
+    errorContainer: {
+        marginBottom: 15,
+        borderWidth: 1,
+        borderColor: 'red',
+        backgroundColor:'#ff00001c',
+        padding: 5,
     }
 })
 
