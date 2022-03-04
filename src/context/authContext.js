@@ -14,7 +14,7 @@ const AuthProvider = ({ children }) => {
 
     const getAuthState = async () => {
         try {
-            const authDataString = await NativeAsyncLocalStorage.getItem("auth");
+            const authDataString = await AsyncStorage.getItem("auth");
             const authData = JSON.parse(authDataString);
 
             configureAxiosHeaders(authData.token);

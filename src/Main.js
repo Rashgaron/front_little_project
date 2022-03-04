@@ -10,8 +10,6 @@ const Stack =  createStackNavigator();
 
 function Main() {
     const { auth } = useContext(AuthContext);
-    
-
 
     return(
         !auth?.isSignedIn ?(

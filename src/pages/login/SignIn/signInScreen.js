@@ -39,7 +39,7 @@ function SignInScreen({ navigation }) {
             signIn(user)
                 .then()
                 .catch(err => {setError({error:true, message: 'There is an error with your password or email'});})
-                .finally(()=> setTimeout(()=>{setLoading(false);}, 1000));
+                .finally(()=> setLoading(false));
         }
     }
 

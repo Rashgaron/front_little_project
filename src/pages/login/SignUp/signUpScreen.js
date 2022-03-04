@@ -1,7 +1,5 @@
 import { View, Text, Button, TextInput, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import React, { useState } from 'react';
-import axios from 'axios';
-import { API_HOST } from '@env';
 import useAuth from '../../../hooks/useAuth';
 
 function SignUpScreen({ navigation }) {
@@ -26,7 +24,8 @@ function SignUpScreen({ navigation }) {
 
     const createUser = async () => {
         if(name.length === 0 || email.length === 0 || password.length === 0) {
-
+            alert('Please fill all fields');
+            return;
         }
         else 
             signUp(user);
